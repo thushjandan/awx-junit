@@ -2,6 +2,7 @@
 import sys
 import os
 import json
+import argparse
 from collections import defaultdict
 from junit_xml import TestSuite, TestCase
 
@@ -29,18 +30,32 @@ AWX_EVENTS = AWX_FAILED_EVENTS + AWX_OK_EVENTS + AWX_ERROR_EVENTS + AWX_SKIPPED_
 
 
 def main():
+    my_parser = argparse.ArgumentParser(prog='awx-junit',
+        usage='awx job_events list --job <job_id> --all | awx-junit',
+        description='Generates a JUnit XML report from a JSON formatted AWX job events.'
+    )
+    args = my_parser.parse_args()
+
+    if sys.stdin.isatty():
+        print("stdin does not contain a JSON", file=sys.stderr)
+        my_parser.print_help(sys.stderr)
+        sys.exit(1)
+
     try:
         awx_data = json.load(sys.stdin)
     except TypeError:
         print("Invalid JSON", file=sys.stderr)
+        my_parser.print_help(sys.stderr)
         sys.exit(1)
     except ValueError:
         print("Input is not a JSON", file=sys.stderr)
+        my_parser.print_help(sys.stderr)
         sys.exit(1)
 
     # Check datastructure
     if not 'results' in awx_data:
         print("Content does not look like AWX job_events payload", file=sys.stderr)
+        my_parser.print_help(sys.stderr)
         sys.exit(1)
 
     test_suites = defaultdict(dict)
