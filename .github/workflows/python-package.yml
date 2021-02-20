@@ -25,10 +25,8 @@ jobs:
         python -m pip install flake8 pytest tox tox-gh-actions
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run Tests
-      run: tox -e py
+      run: tox
     - name: Linting
-      run: tox -e lint
-    - name: Run build
       run: tox -e lint
     - name: Upload pytest test results
       uses: actions/upload-artifact@v2
