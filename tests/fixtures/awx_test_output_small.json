@@ -1,0 +1,72 @@
+{
+     "count": 1,
+     "next": null,
+     "previous": null,
+     "results": [
+          {
+               "id": 1849348,
+               "type": "job_event",
+               "url": "/api/v2/job_events/1849348/",
+               "related": {
+                    "job": "/api/v2/jobs/5324/",
+                    "children": "/api/v2/job_events/1849348/children/"
+               },
+               "summary_fields": {
+                    "job": {
+                         "id": 5324,
+                         "name": "Gitlab_CI_Check_Code",
+                         "description": "runs deploy playbook in check mode triggered by gitlab CI",
+                         "status": "successful",
+                         "failed": false,
+                         "elapsed": 165.888,
+                         "type": "job",
+                         "job_template_id": 73,
+                         "job_template_name": "Gitlab_CI_Check_Code"
+                    },
+                    "role": {}
+               },
+               "created": "2021-02-17T15:04:49.603813Z",
+               "modified": "2021-02-17T15:04:49.603813Z",
+               "job": 5324,
+               "event": "runner_on_ok",
+               "counter": 1,
+               "event_display": "Host OK",
+		"event_data": {
+                    "playbook": "playbooks/deploy.yaml",
+                    "playbook_uuid": "d27109a8-15d9-4687-bf7b-0b36c398524f",
+                    "play": "all",
+                    "play_uuid": "0242ac12-0002-1357-627f-000000000037",
+                    "play_pattern": "all",
+                    "task": "Do stuff task",
+                    "task_uuid": "0242ac12-0002-1357-627f-000000000076",
+                    "task_action": "template",
+                    "task_args": "",
+                    "task_path": "/tmp/awx_5324_kxai6cxu/project/playbooks/roles/example/tasks/main.yaml:2",
+                    "role": "interface",
+                    "host": "host11",
+                    "res": {},
+                    "remote_addr": "host11",
+                    "start": "2021-02-17T15:05:21.418873",
+                    "end": "2021-02-17T15:05:22.526863",
+                    "duration": 1.10799,
+                    "event_loop": null,
+                    "uuid": "43076cb9-5552-4834-bf1c-573567c79f7f"
+		},
+               "event_level": 3,
+               "failed": false,
+               "changed": false,
+               "uuid": "fd761cd0-fa39-4672-a611-f408a7fbb128",
+               "parent_uuid": "0242ac12-0002-1357-627f-000000000076",
+               "host": 1,
+               "host_name": "host11",
+               "playbook": "playbooks/deploy.yaml",
+               "play": "all",
+               "task": "Do stuff task",
+               "role": "interface",
+               "stdout": "",
+               "start_line": 0,
+               "end_line": 1,
+               "verbosity": 0
+          }
+   ]
+}
