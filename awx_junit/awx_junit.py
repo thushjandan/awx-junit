@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import sys
 import os
+import io
 import json
 import argparse
 from collections import defaultdict
-from junit_xml import TestSuite, TestCase
+from junit_xml import TestSuite, TestCase, to_xml_report_string
 
 
 AWX_FAILED_EVENTS = [
@@ -29,20 +30,27 @@ AWX_SKIPPED_EVENTS = [
 AWX_EVENTS = AWX_FAILED_EVENTS + AWX_OK_EVENTS + AWX_ERROR_EVENTS + AWX_SKIPPED_EVENTS
 
 
-def main():
-    my_parser = argparse.ArgumentParser(prog='awx-junit',
+def main(stdin: io.TextIOBase = sys.stdin):
+    my_parser = argparse.ArgumentParser(
+        prog='awx-junit',
         usage='awx job_events list --job <job_id> --all | awx-junit',
         description='Generates a JUnit XML report from a JSON formatted AWX job events.'
     )
+    my_parser.add_argument(
+        '-p',
+        '--pretty',
+        help='Return a pretty-printed version of the document.',
+        action='store_true'
+    )
     args = my_parser.parse_args()
 
-    if sys.stdin.isatty():
+    if stdin.isatty():
         print("stdin does not contain a JSON", file=sys.stderr)
         my_parser.print_help(sys.stderr)
         sys.exit(1)
 
     try:
-        awx_data = json.load(sys.stdin)
+        awx_data = json.load(stdin)
     except TypeError:
         print("Invalid JSON", file=sys.stderr)
         my_parser.print_help(sys.stderr)
@@ -104,7 +112,7 @@ def main():
             TestSuite(test_suites[suite]['name'], test_suites[suite]['cases'])
         )
     # Export to JUnit XML
-    sys.stdout.write(TestSuite.to_xml_string(junit_data))
+    sys.stdout.write(to_xml_report_string(junit_data, args.pretty))
 
 if __name__ == '__main__':
-    main()
+    main(sys.stdin)

@@ -20,6 +20,8 @@ setuptools.setup(
     install_requires=[
        'junit-xml',
     ],
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
